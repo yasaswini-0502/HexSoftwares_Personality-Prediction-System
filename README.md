@@ -8,17 +8,25 @@ The system leverages Machine Learning + NLP to extract key skills, keywords, and
 # 🚀 Key Highlights
 
 ✨ Upload resumes in PDF, DOC, or DOCX formats
+
 ✨ Get an ATS Compatibility Score (match % with job requirements)
+
 ✨ Identify missing keywords with actionable improvement suggestions
+
 ✨ Understand candidate strengths highlighted from the CV
+
 ✨ Predict personality traits directly from resume content
+
 ✨ Built with a modern frontend and a lightweight FastAPI backend
 
 # 🛠 Tech Stack
 
 🔹 Frontend: HTML | CSS | JavaScript
+
 🔹 Backend: FastAPI (Python)
+
 🔹 Machine Learning & NLP: Scikit-learn models
+
 🔹 Deployment: Localhost (with future cloud deploy support)
 
 
@@ -56,7 +64,9 @@ uvicorn main:app --reload
 # 🎯 Use Cases
 
 🔹 For Recruiters: Data-driven hiring decisions with ATS insights
+
 🔹 For Job Seekers: Smarter resume optimization to stand out
+
 🔹 For HR Teams: Faster, more reliable candidate screening
 
 
