@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Analysis</title>
+  <style>
+    :root {
+      --primary: #303a43;
+      --secondary: #1d2126;
+      --bg: #f8f9fb;
+      --card: #3a3535;
+      --border: #3f3f4b;
+      --text: #0e0d0d;
+      --muted: #5f636b;
+    }
+
+    * { box-sizing: border-box; padding: 0; margin: 0; font-family: "Inter", sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 900;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .uploader {
+      border: 2px dashed var(--primary);
+      padding: 40px 20px;
+      border-radius: 20px;
+      background: #abb7c0;
+      box-shadow: 0 4px 16px rgba(122, 106, 106, 0.05);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .uploader:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    input[type="file"] {
+      display: block;
+      margin: 0 auto 15px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 14px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .fileRow {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+      color: var(--text);
+    }
+
+    .score {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .meter {
+      width: 100%;
+      height: 14px;
+      background: #e8e9ff;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      transition: width 0.8s ease-in-out;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .list {
+      padding-left: 20px;
+      list-style: disc;
+    }
+
+    .list li {
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      margin-top: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .hidden { display: none; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Modal Styling */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      animation: fadeIn 0.4s ease;
+    }
+
+    .modal-content h2 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close-btn:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>personality prediction_CV</h1>
+    <p class="sub">Upload your CV and get personality predicted</p>
+
+    <div class="uploader">
+      <input type="file" id="cvFile" accept=".pdf,.doc,.docx" />
+      <button id="analyzeBtn" class="btn">Analyze CV</button>
+      <p style="color: var(--muted); margin-top: 8px;">PDF, DOC, or DOCX files up to 5MB</p>
+    </div>
+
+    <div id="resultCard" class="card hidden">
+      <div class="fileRow" id="fileInfo"></div>
+      <div class="card" style="margin-top: 12px; background:#f0f9ff;">
+        <h3 style="margin: 0 0 6px;">ATS Compatibility Score</h3>
+        <div class="score" id="scoreText">0%</div>
+        <div class="meter"><div class="bar" id="scoreBar"></div></div>
+      </div>
+
+      <div class="grid">
+        <div class="card" style="background:#fef3c7;">
+          <h3>Missing Keywords</h3>
+          <ul class="list" id="missingList"></ul>
+        </div>
+        <div class="card" style="background:#e0f7fa;">
+          <h3>Suggestions</h3>
+          <ul class="list" id="suggestionsList"></ul>
+        </div>
+      </div>
+
+      <div class="card" style="background:#dcfce7;">
+        <h3>Your Strengths</h3>
+        <ul class="list" id="strengthsList"></ul>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="uploadAnotherBtn">Upload Another CV</button>
+        <button class="btn" id="completeBtn">Complete Analysis</button>
+      </div>
+
+      <div class="footer">
+        This analysis is based on common ATS requirements. Results are for informational purposes only.
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="analysisModal">
+    <div class="modal-content">
+      <h2>Personality Prediction</h2>
+      <p>Based on your CV, you appear to be detail-oriented, results-driven, and a strong problem solver with excellent communication skills.</p>
+      <button class="close-btn" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://127.0.0.1:8000/analyze";
+    const fileEl = document.getElementById("cvFile");
+    const btn = document.getElementById("analyzeBtn");
+    const card = document.getElementById("resultCard");
+    const scoreText = document.getElementById("scoreText");
+    const scoreBar = document.getElementById("scoreBar");
+    const missingList = document.getElementById("missingList");
+    const suggestionsList = document.getElementById("suggestionsList");
+    const strengthsList = document.getElementById("strengthsList");
+    const fileInfo = document.getElementById("fileInfo");
+    const uploadAnotherBtn = document.getElementById("uploadAnotherBtn");
+    const completeBtn = document.getElementById("completeBtn");
+    const modal = document.getElementById("analysisModal");
+    const closeModal = document.getElementById("closeModal");
+
+    btn.addEventListener("click", async () => {
+      if (!fileEl.files.length) { alert("Please choose a CV file first."); return; }
+      btn.disabled = true; btn.textContent = "Analyzing...";
+      try {
+        const form = new FormData();
+        form.append("file", fileEl.files[0]);
+        const res = await fetch(API, { method:"POST", body: form });
+        const data = await res.json();
+
+        fileInfo.textContent = `${fileEl.files[0].name} (${(fileEl.files[0].size/1024).toFixed(0)} KB)`;
+        scoreText.textContent = data.score + "%";
+        scoreBar.style.width = data.score + "%";
+
+        function fillList(el, items){
+          el.innerHTML = items.map(x => `<li>${x}</li>`).join("");
+        }
+        fillList(missingList, data.missing_keywords);
+        fillList(suggestionsList, data.suggestions);
+        fillList(strengthsList, data.strengths);
+
+        card.classList.remove("hidden");
+        window.scrollTo({ top: card.offsetTop - 10, behavior: "smooth" });
+      } catch (e) {
+        alert("Failed to analyze. Make sure the backend is running.");
+        console.error(e);
+      } finally {
+        btn.disabled = false; btn.textContent = "Analyze CV";
+      }
+    });
+
+    uploadAnotherBtn.addEventListener("click", () => {
+      fileEl.value = "";
+      card.classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    completeBtn.addEventListener("click", () => {
+      modal.classList.add("active");
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.remove("active");
+    });
+  </script>
+</body>
+</html>
