@@ -35,6 +35,7 @@ The system leverages Machine Learning + NLP to extract key skills, keywords, and
 1️⃣ Clone this repository
 
 git clone https://github.com/Nagakavya21/cv-personality-prediction.git
+
 cd cv-personality-prediction
 
 2️⃣ Install dependencies
